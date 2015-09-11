@@ -1,0 +1,25 @@
+#!/usr/bin/env node
+
+var raptorRegression = require('..');
+var userArgs = process.argv;
+
+if (userArgs.length < 4) {
+  console.error("USAGE: %s data.json app.context [app.entrypoint]", userArgs[0]);
+  process.exit(1);
+}
+
+var dataFile = userArgs[2];
+var appContext = userArgs[3];
+
+var appEntryPoint = userArgs[4];
+
+raptorRegression(dataFile, appContext, appEntryPoint)
+  .then(function(regressions) {
+    if (regressions.length) {
+      console.log(JSON.stringify(regressions));
+    }
+  })
+  .catch(function(err) {
+    console.error(err.stack || err);
+    process.exit(1);
+  });
