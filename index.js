@@ -21,31 +21,22 @@ var readFile = function(dataFile) {
 
 // Data is expected in the format that is output by using the following query:
 // curl -G 'http://localhost:8086/query' --data-urlencode 'db=raptor' --data-urlencode
-// "q=select percentile(value, 95) from measure where metric='visuallyLoaded' and
-// context='communications.gaiamobile.org@dialer' and time > now() - 7d group by
-// revisionId; select * from annotation"
-
+// "q=SELECT PERCENTILE(value, 95) as value FROM "measure" WHERE "metric" = 'visuallyLoaded'
+// AND "context" = 'clock.gaiamobile.org' AND "branch" = 'master' AND "device" = 'flame-kk'
+// AND "memory" = '319' AND "test" = 'cold-launch' AND time > '2015-09-09' AND time < '2015-09-17'
+// GROUP BY time(15m), branch, device, memory fill(none)
 var parseAppData = function(dataObj) {
   return new Promise(function(resolve, reject) {
     var perfData = [];
-    var series = dataObj.results[0].series;
+    var series = dataObj.results[0].series[0]['values'];
 
     series.forEach(function(entry) {
       var current = entry;
 
-      // only want measures
-      if (current.name !== 'measure') {
-        return;
-      }
-
       perfData.push({
-        revisionId: current.tags.revisionId,
-        value: current.values[0][1]
+        time: current[0],
+        value: current[1]
       });
-
-      // TO-DO: Parse the annotation data into a different array
-      // so that it can be used later to look the actual gaia
-      // and gecko versions from the revisionId value
     });
 
     debug("Found %s measures", perfData.length);
