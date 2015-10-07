@@ -1,24 +1,25 @@
 {
   "name": "raptor-regression",
-  "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Raptor regression detector",
-  "bin": {
-    "raptor-regression": "./bin/raptor-regression"
-  },
   "dependencies": {
-    "debug": "^2.2.0",
-    "promise": "^6.1.0"
-  },  
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/rwood-moz/raptor-regression.git"
+    "ramda": "^0.17.1"
   },
   "author": "Rob Wood",
   "license": "MPL-2.0",
-  "preferGlobal": true,
+  "maintainers": [
+    {
+      "name": "rwood-moz",
+      "email": "rwood@mozilla.com"
+    },
+    {
+      "name": "eliperelman",
+      "email": "eli@eliperelman.com"
+    }
+  ],
+  "repository": "mozilla-raptor/regression",
   "bugs": {
-    "url": "https://github.com/rwood-moz/raptor-regression/issues"
-  },
-  "homepage": "https://github.com/rwood-moz/raptor-regression"
+    "url": "https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox%20OS&component=Gaia%3A%3APerformanceTest",
+    "email": "raptor@mozilla.com"
+  }
 }
