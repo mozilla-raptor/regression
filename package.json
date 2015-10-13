@@ -1,9 +1,9 @@
 {
   "name": "raptor-regression",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Raptor regression detector",
   "dependencies": {
-    "ramda": "^0.17.1"
+    "ramda": "0.18.0"
   },
   "author": "Rob Wood",
   "license": "MPL-2.0",

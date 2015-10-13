@@ -27,7 +27,7 @@ var infinity = R.always(Infinity);
  * @param {Number}
  * @returns {Number}
  */
-var square = R.partialRight(Math.pow, 2);
+var square = R.partialRight(Math.pow, [2]);
 
 /**
  * Square every number in a collection
@@ -71,7 +71,7 @@ var calculateWeightedSum = R.pipe(R.zip, R.map(R.partial(R.apply, R.multiply)), 
  */
 var variance = R.cond([
   [R.isEmpty, zero],
-  [R.T, R.converge(R.divide, varianceNumerator, varianceDivisor)]
+  [R.T, R.converge(R.divide, [varianceNumerator, varianceDivisor])]
 ]);
 
 /**
@@ -162,14 +162,14 @@ var analyze = function(values, weights) {
  * @param {Array<Number>} values
  * @returns {{length: Number, average: Number, variance: Number}}
  */
-var analyzeSingle = R.converge(analyze, R.identity, R.map(single));
+var analyzeSingle = R.converge(analyze, [R.identity, R.map(single)]);
 
 /**
  * Run an analysis on a set a values using linear weighing
  * @param {Array<Number>} values
  * @returns {{length: Number, average: Number, variance: Number}}
  */
-var analyzeLinear = R.converge(analyze, R.identity, linear);
+var analyzeLinear = R.converge(analyze, [R.identity, linear]);
 
 /**
  * Determine the delta of the averages of an analysis pair
@@ -228,7 +228,7 @@ var bothZeroVariance = function(a, b) {
  * @param {Object} b secondary analysis
  * @returns {Number}
  */
-var tTest = R.converge(R.pipe(R.divide, Math.abs), averagesDelta, calculateTDivisor);
+var tTest = R.converge(R.pipe(R.divide, Math.abs), [averagesDelta, calculateTDivisor]);
 
 /**
  * Calculate the normalized T-test value for a pair of analyses
