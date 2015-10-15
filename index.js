@@ -63,7 +63,7 @@ var mapIndexed = R.addIndex(R.map);
  * @param {Array<Number>} weights
  * @returns Number
  */
-var calculateWeightedSum = R.pipe(R.zip, R.map(R.partial(R.apply, R.multiply)), R.sum);
+var calculateWeightedSum = R.pipe(R.zip, R.map(R.partial(R.apply, [R.multiply])), R.sum);
 
 /**
  * Calculate the variance of a collection of numbers
@@ -80,9 +80,9 @@ var variance = R.cond([
  * @param {Array<Number>} numbers
  * @returns {Array<Number>}
  */
-var linear = R.partial(mapIndexed, function(value, index, array) {
+var linear = R.partial(mapIndexed, [function(value, index, array) {
   return R.divide(R.subtract(R.length(array), index), R.length(array));
-});
+}]);
 
 /**
  * Return a subset of statistically viable points from a larger dataset
@@ -98,13 +98,13 @@ var sliceWindow = function(window) {
  * @param {Array} array
  * @returns {Array}
  */
-var getWindows = R.partial(mapIndexed, function(current, index, array) {
+var getWindows = R.partial(mapIndexed, [function(current, index, array) {
   return {
     current: current,
     back: R.reverse(R.pluck('value', R.slice(R.subtract(index, BACKWINDOW_SIZE), index, array))),
     fore: R.pluck('value', R.slice(index, R.add(index, FOREWINDOW_SIZE), array))
   };
-});
+}]);
 
 /**
  * Group each regression candidate with its adjacent candidates
